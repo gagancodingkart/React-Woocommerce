@@ -72,9 +72,9 @@ class Header extends Component {
         <div class="row">
           <div class="col-sm-4">
             <div class="logo pull-left">
-              <a href="index.html">
+              <Link to="/">
                 <img src="images/home/logo.png" alt="" />
-              </a>
+              </Link>
             </div>
             <div class="btn-group pull-right">
               <div class="btn-group">
@@ -181,7 +181,7 @@ class Header extends Component {
                   </a>
                   <ul role="menu" class="sub-menu">
                     <li>
-                      <a href="shop.html">Products</a>
+                      <Link to="/shop">Products</Link>
                     </li>
                     <li>
                       <a href="product-details.html">Product Details</a>
@@ -214,7 +214,7 @@ class Header extends Component {
                   <a href="404.html">404</a>
                 </li>
                 <li>
-                  <a href="contact-us.html">Contact</a>
+                  <Link to="/contact">Contact</Link>
                 </li>
               </ul>
             </div>
@@ -232,5 +232,3 @@ class Header extends Component {
   }
 }
 export default Header;
-
-

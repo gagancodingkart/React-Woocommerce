@@ -6,6 +6,9 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Home from "./components/Home.js";
 import Login from "./components/Login.js";
 import Cart from "./components/Cart.js";
+import Shop from "./components/Shop.js";
+import ContactUs from "./components/ContactUs.js";
+import ProductCategories from "./components/ProductCategories.js";
 
 class App extends Component {
   render() {
@@ -17,6 +20,9 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/cart" component={Cart} />
+            <Route exact path="/shop" component={Shop} />
+            <Route exact path="/contact" component={ContactUs} />
+            <Route exact path="/category" component={ProductCategories} />
           </div>
         </Router>
       </div>
