@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { WooCommerce } from "../service/WoocommerceConnection.js";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
 import { addToCart } from "../service/WoocommerceFunctions";
@@ -200,7 +201,7 @@ class ProductCategories extends Component {
 						</div>
 						))}
 						<ul class="pagination">
-							<li class="active"><a href="">1</a></li>
+							<li class="active"><Link to="/shop">1</Link></li>
 							<li><a href="">2</a></li>
 							<li><a href="">3</a></li>
 							<li><a href="">&raquo;</a></li>

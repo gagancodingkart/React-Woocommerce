@@ -16,14 +16,37 @@ class Shop extends Component {
     };
   }
 
-  getData() {
-    const that = this;
-    WooCommerce.getAsync("products?per_page=6").then(function(result) {
+  getData(page) {
+    if(page){
+		var page = page;
+	}
+	else{
+		var page = 1;
+	}
+	const that = this;
+    WooCommerce.getAsync('products?page='+page).then(function(result) {
       that.setState({
         isLoaded: true,
         items: JSON.parse(result.toJSON().body)
       });
     });
+  }
+
+  productCount() {
+	var paged = 1;
+	var products = [];
+	var all_products = [];
+	do{
+		WooCommerce.getAsync('products?page='+paged).then(function(result) {
+		products = JSON.parse(result.toJSON().body)
+        Array.prototype.push.apply(all_products,products)
+		});
+		all_products.forEach(function(i,v) {
+			console.log(v);
+		});
+		
+	  paged++;
+	} while (products.length > 0);
   }
 
   getProductCategories() {
@@ -39,6 +62,7 @@ class Shop extends Component {
   componentDidMount() {
 	this.getData();
 	this.getProductCategories();
+	this.productCount();
   }
 
   render() {
@@ -97,14 +121,18 @@ class Shop extends Component {
 						{this.state.items.map((val, index) => (
 						<div class="col-sm-4">
 							<div class="product-image-wrapper">
+							    
 								<div class="single-products">
-									<div class="productinfo text-center">
+									<div id={val.id} class="productinfo text-center">
+									<Link to={`/product/${val.id}`}>
 										<img src={val.images[0].src} alt="" />
 										<h2>${val.price}</h2>
 										<p>{val.name}</p>
+									</Link>
 										<a href="#" class="btn btn-default add-to-cart" onClick={() => addToCart(val.id)}><i class="fa fa-shopping-cart"></i>Add to cart</a>
 									</div>
 								</div>
+								
 								<div class="choose">
 									<ul class="nav nav-pills nav-justified">
 										<li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
@@ -115,9 +143,15 @@ class Shop extends Component {
 						</div>
 						))}
 						<ul class="pagination">
-							<li class="active"><a href="">1</a></li>
-							<li><a href="">2</a></li>
-							<li><a href="">3</a></li>
+							<li class="active"><a href="javascript:void(0);" onClick={() => {
+										return this.getData(1);
+									}}>1</a></li>
+							<li><a href="javascript:void(0);" onClick={() => {
+										return this.getData(2);
+									}}>2</a></li>
+							<li><a href="javascript:void(0);" onClick={() => {
+										return this.getData(3);
+									}}>3</a></li>
 							<li><a href="">&raquo;</a></li>
 						</ul>
 					</div>
