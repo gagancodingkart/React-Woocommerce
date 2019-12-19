@@ -6,19 +6,21 @@ import Footer from "./Footer.js";
 import { addToCart } from "../service/WoocommerceFunctions";
 
 class ProductCategories extends Component {
-  constructor(props) {
-    super(props);
+  constructor({ match :{ params :{id} } }) {
+    super();
     this.state = {
       error: null,
-      isLoaded: false,
+	  isLoaded: false,
+	  category_id : id,
+	  categories: [],
       products: []
     };
   }
 
-  getData() {
-    const that = this;
-    WooCommerce.getAsync("products/?filter[categories]=uv-neon").then(function(result) {
-        console.log(result);
+  getData(id) {
+	var category_id = this.state.category_id;
+	const that = this;
+    WooCommerce.getAsync('products/?category='+category_id).then(function(result) {
       that.setState({
         isLoaded: true,
         products: JSON.parse(result.toJSON().body)
@@ -26,8 +28,19 @@ class ProductCategories extends Component {
     });
   }
 
+  getProductCategories() {
+    const that = this;
+    WooCommerce.getAsync("products/categories").then(function(result) {
+      that.setState({
+        isLoaded: true,
+        categories: JSON.parse(result.toJSON().body)
+      });
+    });
+  }
+
   componentDidMount() {
-    this.getData();
+	this.getData();
+	this.getProductCategories();
   }
 
   render() {
@@ -41,110 +54,13 @@ class ProductCategories extends Component {
 					<div class="left-sidebar">
 						<h2>Category</h2>
 						<div class="panel-group category-products" id="accordian">
+						{this.state.categories.map((val, index) => (
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
-											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
-											Sportswear
-										</a>
-									</h4>
-								</div>
-								<div id="sportswear" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ul>
-											<li><a href="">Nike </a></li>
-											<li><a href="">Under Armour </a></li>
-											<li><a href="">Adidas </a></li>
-											<li><a href="">Puma</a></li>
-											<li><a href="">ASICS </a></li>
-										</ul>
-									</div>
+									<h4 class="panel-title"><Link to={`/category/${val.id}`}>{val.name}</Link></h4>
 								</div>
 							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordian" href="#mens">
-											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
-											Mens
-										</a>
-									</h4>
-								</div>
-								<div id="mens" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ul>
-											<li><a href="">Fendi</a></li>
-											<li><a href="">Guess</a></li>
-											<li><a href="">Valentino</a></li>
-											<li><a href="">Dior</a></li>
-											<li><a href="">Versace</a></li>
-											<li><a href="">Armani</a></li>
-											<li><a href="">Prada</a></li>
-											<li><a href="">Dolce and Gabbana</a></li>
-											<li><a href="">Chanel</a></li>
-											<li><a href="">Gucci</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordian" href="#womens">
-											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
-											Womens
-										</a>
-									</h4>
-								</div>
-								<div id="womens" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ul>
-											<li><a href="">Fendi</a></li>
-											<li><a href="">Guess</a></li>
-											<li><a href="">Valentino</a></li>
-											<li><a href="">Dior</a></li>
-											<li><a href="">Versace</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Kids</a></h4>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Fashion</a></h4>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Households</a></h4>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Interiors</a></h4>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Clothing</a></h4>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Bags</a></h4>
-								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#">Shoes</a></h4>
-								</div>
-							</div>
+						))}
 						</div>
 					
 						<div class="brands_products">
@@ -185,9 +101,11 @@ class ProductCategories extends Component {
 							<div class="product-image-wrapper">
 								<div class="single-products">
 									<div class="productinfo text-center">
+									    <Link to={`/product/${val.id}`}>
 										<img src={val.images[0].src} alt="" />
 										<h2>${val.price}</h2>
 										<p>{val.name}</p>
+										</Link>
 										<a href="#" class="btn btn-default add-to-cart" onClick={() => addToCart(val.id)}><i class="fa fa-shopping-cart"></i>Add to cart</a>
 									</div>
 								</div>

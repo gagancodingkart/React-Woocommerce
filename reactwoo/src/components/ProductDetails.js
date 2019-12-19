@@ -218,7 +218,7 @@ class SingleProduct extends Component {
 						</div>
 						<div class="col-sm-7">
 							<div class="product-information">
-								{console.log(this.state.productDetails)}
+								{console.log(this.state.productDetails.images)}
 								<img src="images/product-details/new.jpg" class="newarrival" alt="" />
 								<h2>{this.state.productDetails.name}</h2>
 								<p>Web ID: 1089772</p>

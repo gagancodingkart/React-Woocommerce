@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { WooCommerce } from "./../service/WoocommerceConnection.js";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
@@ -428,9 +429,11 @@ class Home extends Component {
                       <div class="product-image-wrapper">
                         <div class="single-products">
                           <div class="productinfo text-center">
+                            <Link to={`/product/${val.id}`}>
                             <img src={val.images[0].src} alt="" />
                             <h2>${val.price}</h2>
                             <p>{val.name}</p>
+                            </Link>
                             <a href="javascript:void(0);" class="btn btn-default add-to-cart" onClick={() => addToCart(val.id)}>
                               <i class="fa fa-shopping-cart"></i>Add to cart
                             </a>

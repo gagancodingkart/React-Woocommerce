@@ -39,14 +39,15 @@ class Shop extends Component {
 	do{
 		WooCommerce.getAsync('products?page='+paged).then(function(result) {
 		products = JSON.parse(result.toJSON().body)
-        Array.prototype.push.apply(all_products,products)
+		Array.prototype.push.apply(all_products,products)
 		});
-		all_products.forEach(function(i,v) {
-			console.log(v);
-		});
-		
+		// console.log(all_products);
+		all_products.map((val, index) => (
+			console.log(val)
+		))
+
 	  paged++;
-	} while (products.length > 0);
+	} while (all_products.length > 0);
   }
 
   getProductCategories() {
@@ -79,7 +80,7 @@ class Shop extends Component {
 						{this.state.categories.map((val, index) => (
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<h4 class="panel-title"><Link to={val.slug}>{val.name}</Link></h4>
+									<h4 class="panel-title"><Link to={`/category/${val.id}`}>{val.name}</Link></h4>
 								</div>
 							</div>
 						))}
@@ -121,7 +122,6 @@ class Shop extends Component {
 						{this.state.items.map((val, index) => (
 						<div class="col-sm-4">
 							<div class="product-image-wrapper">
-							    
 								<div class="single-products">
 									<div id={val.id} class="productinfo text-center">
 									<Link to={`/product/${val.id}`}>
