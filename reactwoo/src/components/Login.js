@@ -43,33 +43,33 @@ class Login extends Component {
       <div>
         <Header />
         <section id="form">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-4 col-sm-offset-1">
-                <div class="login-form">
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-4 col-sm-offset-1">
+                <div className="login-form">
                   <h2>Login to your account</h2>
-				  {this.state.message}
+				          {this.state.message}
                   <form action="#">
                     <input type="text" name="username" placeholder="Username" onChange={this.handleChange} value={this.state.username} />
                     <input type="password" name="password" placeholder="Passowrd" onChange={this.handleChange} value={this.state.password} />
                     
-                    <button type="button" onClick={this.loginUser} class="btn btn-default">
+                    <button type="button" onClick={this.loginUser} className="btn btn-default">
                       Login
                     </button>
                   </form>
                 </div>
               </div>
-              <div class="col-sm-1">
-                <h2 class="or">OR</h2>
+              <div className="col-sm-1">
+                <h2 className="or">OR</h2>
               </div>
-              <div class="col-sm-4">
-                <div class="signup-form">
+              <div className="col-sm-4">
+                <div className="signup-form">
                   <h2>New User Signup!</h2>
                   <form action="#">
                     <input type="text" placeholder="Name" />
                     <input type="email" placeholder="Email Address" />
                     <input type="password" placeholder="Password" />
-                    <button type="submit" class="btn btn-default">
+                    <button type="submit" className="btn btn-default">
                       Signup
                     </button>
                   </form>
